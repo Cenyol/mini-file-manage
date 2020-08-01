@@ -3,6 +3,7 @@ let express = require('express')
 const nunjucks = require('nunjucks')
 const path = require('path')
 let app = express()
+const StandardBasicTime = 1596271531000;
 
 var bodyparser = require('body-parser');
 app.use(bodyparser.urlencoded({extended:true}));
@@ -20,6 +21,17 @@ let database = new sqlite3.Database("sqlite3.db", function(err) {
       process.exit();
   }
 });
+
+// 定时清理60秒以上的lock
+setInterval(() => {
+  let _60SecondsAgo = Date.now() - 60000 - StandardBasicTime;
+
+  database.run("update file_info set status='free' where status='lock' and update_time < ?", [_60SecondsAgo], function (err) {
+    if (err) {
+      console.log("unlock data error,", err.message);
+    }
+  });
+}, 1000);
 
 
 app.get('/', function(req,res) {
@@ -47,22 +59,33 @@ app.get('/update/:name',function(req,res){
   database.all("select * from file_info where name=? limit 1", [req.params.name],function(err, files) {
     if (err) {
         console.log("select from file_info error,", err.message);
-    } else {
-      if (files.length > 0) {
-        data['file'] = files[0]
-        res.render('update.html', data);
+    } else if (files.length > 0 && files[0].status === "free") {
+        let _NowBaseOnStandardTime = Date.now() - StandardBasicTime;
+        database.run("update file_info set status=?,update_time=? where name=?", ["lock", _NowBaseOnStandardTime, req.params.name], function (err) {
+          if (err) {
+              console.log("lock data error,", err.message);
+          } else {
+
+            data['file'] = files[0]
+            res.render('update.html', data);
+
+          }
+        });
       }
-    }
   });
 });
 
 app.post('/save', function(req, res) {
   let {name, content, submit} = req.body
   if (submit === "Update") {
-
+    database.run("update file_info set name=?,status=?,content=?", [name, "free", content], function (err) {
+      if (err) {
+          console.log("update data error,", err.message);
+      }
+    });
   } else if (submit === "Create") {
     // 插入数据
-    database.run("insert into file_info(name, status, content) VALUES(?,?,?)", [name, "free", content], function (err) {
+    database.run("insert into file_info(name, status, content, update_time) VALUES(?,?,?,?)", [name, "free", content,0], function (err) {
       if (err) {
           console.log("insert data error,", err.message);
       }
