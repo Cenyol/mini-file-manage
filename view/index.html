@@ -19,8 +19,8 @@
       <li>
         <div>
           <h3>{{file.name}}</h3>
-          <span>status: {{file.status}}</span> | operations: <a href={% if file.status == "free" %} "/update/{{file.name}}" {% else %} "#" {% endif %}>edit</a>
-          <p>{{file.update_time}} | {{file.content}}</p>
+          <span>status: {{file.status}}</span> | operations: <a href={% if file.status == "free" %} "/update/{{file.id}}" {% else %} "#" {% endif %}>edit</a>
+          <p>{{file.content}}</p>
         </div>
       </li>
     {% endfor %}

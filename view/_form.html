@@ -1,4 +1,5 @@
 <form method="post" action="/save">
+  <input type="hidden" name="id" value="{{file.id}}"/>
   <input type='text' name="name" value="{{file.name}}" style="width: 320px;"/><br /><br />
   <textarea name="content" style="width: 320px;" rows=6>{{file.content}}</textarea><br /><br />
   <input type="submit" name="submit" value="{{submit}}"/>

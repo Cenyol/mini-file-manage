@@ -11,7 +11,7 @@ var database = new sqlite3.Database("sqlite3.db", function (err) {
 });
 
 //创建表
-database.run("create table if not exists file_info(name TEXT, status TEXT, content TEXT, update_time INTEGER)", function (err) {
+database.run("create table if not exists file_info(id integer primary key autoincrement, name varchar(128), status text, content text, lock_time integer)", function (err) {
     if (err) {
         console.log("create database error,", err.message);
         process.exit();
@@ -19,17 +19,17 @@ database.run("create table if not exists file_info(name TEXT, status TEXT, conte
         console.log("create table success");
 
         //插入数据
-        database.run("insert into file_info(name, status, content, update_time) VALUES(?,?,?,?)", ["readme.txt", "free", "this is a introduction.", 0], function (err) {
+        database.run("insert into file_info(name, status, content, lock_time) VALUES(?,?,?,?)", ["readme.txt", "free", "this is a introduction.", 0], function (err) {
             if (err) {
                 console.log("insert data error,", err.message);
             }
         });
-        database.run("insert into file_info(name, status, content, update_time) VALUES(?,?,?,?)", ["writeme.txt", "lock", "this is a introduction too.", 0], function (err) {
+        database.run("insert into file_info(name, status, content, lock_time) VALUES(?,?,?,?)", ["writeme.txt", "lock", "this is a introduction too.", 0], function (err) {
             if (err) {
                 console.log("insert data error,", err.message);
             }
         });
-        database.run("insert into file_info(name, status, content, update_time) VALUES(?,?,?,?)", ["execme.txt", "free", "this is a instructment.", 0], function (err) {
+        database.run("insert into file_info(name, status, content, lock_time) VALUES(?,?,?,?)", ["execme.txt", "free", "this is a instructment.", 0], function (err) {
             if (err) {
                 console.log("insert data error,", err.message);
             }
