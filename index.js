@@ -19,7 +19,7 @@ let database = new sqlite3.Database("sqlite3.db", function (err) {
 
 
 app.get('/',function(req,res){
-  var data = { name: 'cenyol' };
+  let data = {};
 
   //查询
   database.all("select * from file_info", function (err, files) {

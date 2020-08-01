@@ -17,6 +17,7 @@
       <li>
         <div>
           <h3>{{file.name}}</h3>
+          <span>status: {{file.status}}</span> | operations: <a href={% if file.status == "free" %} "/edit/{{file.name}}" {% else %} "#" {% endif %}>edit</a>
           <p>{{file.content}}</p>
         </div>
       </li>
