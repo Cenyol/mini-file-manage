@@ -37,14 +37,39 @@ app.get('/', function(req,res) {
 });
 
 
-app.get('/form', function(req, res) {
-  res.render('form.html');
+app.get('/create', function(req, res) {
+  let data = {submit: 'Create'};
+  res.render('create.html', data);
 });
-app.post('/form', function(req, res) {
+app.get('/update/:name',function(req,res){
+  let data = {submit: 'Update'};
+  //查询
+  database.all("select * from file_info where name=? limit 1", [req.params.name],function(err, files) {
+    if (err) {
+        console.log("select from file_info error,", err.message);
+    } else {
+      if (files.length > 0) {
+        data['file'] = files[0]
+        res.render('update.html', data);
+      }
+    }
+  });
+});
+
+app.post('/save', function(req, res) {
+  let {name, content, submit} = req.body
+  if (submit === "Update") {
+
+  } else if (submit === "Create") {
+    // 插入数据
+    database.run("insert into file_info(name, status, content) VALUES(?,?,?)", [name, "free", content], function (err) {
+      if (err) {
+          console.log("insert data error,", err.message);
+      }
+    });
+  }
   console.log(req.body);
-  // console.log(req.body.content);
-  // var result = req.body
-  //   res.send(JSON.stringify(result));
+  res.redirect('http://localhost:8080');
 });
 
 

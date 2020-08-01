@@ -8,15 +8,11 @@
 </head>
 <body>
   <div>
-    Input some info And submit them.
+    Update some info And save them.
   </div>
 
   <div>
-      <form method="post" action="/form" enctype="application/json">
-          <input type='text' name="name" style="width: 320px;"/><br /><br />
-          <textarea name="content" style="width: 320px;" rows=6></textarea><br /><br />
-          <input type="submit" name="submit"/>
-      </form>
+    {% include "_form.html" %}
   </div>
 </body>
 </html>

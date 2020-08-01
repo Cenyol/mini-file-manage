@@ -10,7 +10,7 @@
   <div>
     File list. 
     <br />
-    To submit something, click <a href="/form">here</a>
+    To submit something, click <a href="/create">here</a>
   </div>
 
     
@@ -19,13 +19,12 @@
       <li>
         <div>
           <h3>{{file.name}}</h3>
-          <span>status: {{file.status}}</span> | operations: <a href={% if file.status == "free" %} "/edit/{{file.name}}" {% else %} "#" {% endif %}>edit</a>
+          <span>status: {{file.status}}</span> | operations: <a href={% if file.status == "free" %} "/update/{{file.name}}" {% else %} "#" {% endif %}>edit</a>
           <p>{{file.content}}</p>
         </div>
       </li>
     {% endfor %}
   </ul>
-  {% include "form.html" %}
 </body>
 </html>
 
