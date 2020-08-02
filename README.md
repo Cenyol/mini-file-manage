@@ -13,6 +13,9 @@ NodeJs + SQLite3
 
 #### Launch In Terminal
 ```
+git clone https://github.com/Cenyol/mini-file-manage.git
 cd mini-file-manage
+npm install
 node index.js
 ```
+Precondition: you need to have installed node and npm
