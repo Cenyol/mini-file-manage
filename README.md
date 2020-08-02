@@ -19,3 +19,13 @@ npm install
 node index.js
 ```
 Precondition: you need to have installed node and npm
+
+#### Clean Old Data
+if you want, what you need to is run the below cmd:
+```
+cd mini-file-manage
+rm -f sqlite3.db
+
+# rerun init system
+node index.js
+```

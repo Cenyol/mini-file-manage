@@ -24,7 +24,6 @@ exports.index = function(req, res){
     if (err) {
         console.log("select from file_info error,", err.message);
     } else {
-      console.log(files);
       data['files'] = files;
       data['uuid'] = uuid;
       res.render('index.html', data);
@@ -32,7 +31,6 @@ exports.index = function(req, res){
   });
 }
 function getUuidFromCookie(req, res) {
-  console.log(req.cookies.uuid);
   if (req.cookies.uuid === undefined) {
     let uuid = "demo-" + Math.random().toString(36).slice(-8);
     res.cookie("uuid", uuid ,{maxAge: 900000, httpOnly: true});
