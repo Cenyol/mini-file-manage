@@ -23,7 +23,7 @@ function initDB() {
             console.log("create database success");
 
             //创建表
-            database.run("create table if not exists file_info(id integer primary key autoincrement, name varchar(128), status text, content text, lock_time integer)", function (err) {
+            database.run("create table if not exists file_info(id integer primary key autoincrement, name varchar(128), status text, content text, lock_time integer, lock_keeper varchar(16))", function (err) {
                 if (err) {
                     console.log("create database error,", err.message);
                     process.exit();

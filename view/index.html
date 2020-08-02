@@ -19,7 +19,8 @@
       <li>
         <div>
           <h3>{{file.name}}</h3>
-          <span>status: {{file.status}}</span> | operations: <a href={% if file.status == "free" %} "/update/{{file.id}}" {% else %} "#" {% endif %}>edit</a>
+          <span>status: {% if (file.status == "lock") and (file.lock_keeper == uuid) %} yours {% else %} {{file.status}} {% endif %}</span> | 
+          operations: <a href={% if (file.status == "free") or (file.lock_keeper == uuid) %} "/update/{{file.id}}" {% else %} "#" {% endif %}>edit</a>
           <p>{{file.content}}</p>
         </div>
       </li>

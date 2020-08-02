@@ -2,13 +2,15 @@ const path = require('path')
 const express = require('express')
 const nunjucks = require('nunjucks')
 const bodyparser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const fileService = require("./service/FileService")
 const initService = require("./service/InitService")
 const scheduleService = require("./service/ScheduleService")
 
-const app = express()
-app.use(bodyparser.urlencoded({extended:true}));
+const app = express();
+app.use(cookieParser());
 app.use(bodyparser.json())
+app.use(bodyparser.urlencoded({extended:true}));
 nunjucks.configure(path.resolve(__dirname,'view'),{ autoescape: true, express: app });
 
 initService.init();
