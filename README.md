@@ -26,6 +26,6 @@ if you want, what you need to is run the below cmd:
 cd mini-file-manage
 rm -f sqlite3.db
 
-# rerun init system
+# rerun initial system
 node index.js
 ```
